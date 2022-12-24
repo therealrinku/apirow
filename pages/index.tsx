@@ -22,6 +22,7 @@ const TokenGenerator = () => {
         setToken(res.data.token);
         setTokenValidated(true);
         setLoading(false);
+        setData("");
       })
       .catch((err) => {
         setLoading(false);
@@ -126,6 +127,7 @@ const TokenGenerator = () => {
               onChange={(e) => {
                 setToken(e.target.value);
                 setTokenValidated(false);
+                setData("");
               }}
               className="text-sm shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="username"
