@@ -117,20 +117,23 @@ const TokenGenerator = () => {
           </div>
           {loading && <p>Processing.....</p>}
           {tokenValidated && (
-            <textarea
-              className="rounded-lg outline-none bg-inherit p-2 border-2 border-blue-500"
-              value={data}
-              placeholder="JSON or string"
-              onChange={(e) => setData(e.target.value)}
-            />
+            <>
+              <textarea
+                className="rounded-lg outline-none bg-inherit p-2 border-2 border-blue-500"
+                value={data}
+                placeholder="JSON or string"
+                onChange={(e) => setData(e.target.value)}
+              />
+
+              <button
+                disabled={!data.trim().length || loading}
+                className="bg-blue-500 rounded-lg p-2 w-1/4"
+                onClick={addData}
+              >
+                Add/Update Data
+              </button>
+            </>
           )}
-          <button
-            disabled={!data.trim().length || loading}
-            className="bg-blue-500 rounded-lg p-2 w-1/4"
-            onClick={addData}
-          >
-            Add/Update Data
-          </button>
 
           {data.trim().length > 0 && (
             <>
