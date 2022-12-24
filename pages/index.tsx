@@ -142,7 +142,7 @@ const TokenGenerator = () => {
           <p className="text-orange-200">
             How to access data ? <br />
             Simply use <span className="underline text-green-500">
-              https://https://nerdev-plum.vercel.app/data
+              https://https://nerdev-plum.vercel.app/api/data
             </span>{" "}
             route and pass authorization : BASIC ##your-token in your header <br /> and boom, you'll get your data.
             <br />
