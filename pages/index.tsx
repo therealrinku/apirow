@@ -10,7 +10,7 @@ const TokenGenerator = () => {
   const [tokenValidated, setTokenValidated] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const [message, setMessage] = useState("hh");
+  const [message, setMessage] = useState("");
 
   const [data, setData] = useState("");
 
