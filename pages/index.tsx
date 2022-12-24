@@ -66,9 +66,11 @@ const TokenGenerator = () => {
     <>
       <Head>
         <title>Nerd Dev</title>
+        <meta name="description" content="Developed by Nerd, for nerds" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet" />
+        <link rel="shortcut icon" href="https://img.icons8.com/fluency/2x/nerd.png" />
       </Head>
 
       <div className="w-full max-w-md my-10 mx-auto">
