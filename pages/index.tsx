@@ -3,11 +3,14 @@ import Head from "next/head";
 import JSONPretty from "react-json-pretty";
 import "react-json-pretty/themes/monikai.css";
 import axios from "axios";
+import { FiClipboard, FiInfo, FiLayers, FiPlus, FiSun, FiTerminal, FiX } from "react-icons/fi";
 
 const TokenGenerator = () => {
   const [token, setToken] = useState("");
   const [tokenValidated, setTokenValidated] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [message, setMessage] = useState("hh");
 
   const [data, setData] = useState("");
 
@@ -37,7 +40,7 @@ const TokenGenerator = () => {
       .catch((err) => {
         if (err.response.data.message === "Invalid Token") {
           setToken("");
-          alert("Invalid TOken");
+          setMessage("Invalid Token");
           setTokenValidated(false);
         }
         setLoading(false);
@@ -49,22 +52,13 @@ const TokenGenerator = () => {
     axios
       .post("/api/addData", { key: token, data: data })
       .then((res) => {
-        alert("DAtA added . you can access it using your token. ");
+        setMessage("Data/edited added successfully. You can access it via REST API.");
         setLoading(false);
       })
       .catch((err) => {
-        alert(err.message);
+        setMessage(err.message);
         setLoading(false);
       });
-  };
-
-  const isJson = (str: string) => {
-    try {
-      JSON.parse(str);
-    } catch (e) {
-      return false;
-    }
-    return true;
   };
 
   return (
@@ -76,83 +70,127 @@ const TokenGenerator = () => {
         <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet" />
       </Head>
 
-      <div className="bg-slate-700 h-auto min-h-screen  text-white mx-auto px-4 py-8">
-        <h5 className="text-center my-10 text-2xl">Nerd Dev</h5>
-
-        <div className="w-11/12 mt-10 mx-auto flex flex-col gap-10">
-          <input
-            type="text"
-            value={token}
-            onChange={(e) => {
-              setToken(e.target.value);
-              setTokenValidated(false);
-            }}
-            className="rounded-lg outline-none bg-inherit p-2 border-2 border-blue-500"
-            placeholder="Submit your token here"
-          />
-
-          {tokenValidated && (
-            <button
-              className="bg-blue-500 rounded-lg p-2 w-100"
-              onClick={() => {
-                window.navigator.clipboard.writeText(token);
-                alert("Token COpied");
-              }}
-            >
-              Copy Token
+      <div className="w-full max-w-md my-10 mx-auto">
+        <div className="flex items-center gap-10 justify-between shadow  p-2">
+          <p className="font-bold text-blue-500 text-lg">Nerd Dev</p>
+          <button className="tooltip bg-white py-1 px-2  border rounded shadow hover:shadow-md">
+            <FiInfo />
+            <span className="tooltiptext bg-blue-500 shadow">
+              <p className="text-sm">
+                How to access data ? <br />
+                Simply submit GET or POST request to{" "}
+                <b className="underline text-red-200 d-flex">
+                  https://nerdev-plum.vercel.app/api/data{" "}
+                  <button
+                    onClick={() => {
+                      window.navigator.clipboard.writeText("https://nerdev-plum.vercel.app/api/data");
+                      alert("Url Copied");
+                    }}
+                    className="bg-blue-500 py-1 px-2 top-8 border rounded shadow right-2 hover:shadow-md"
+                  >
+                    <FiClipboard />
+                  </button>
+                </b>{" "}
+                route and pass
+                <p className="font-bold underline">authorization : BASIC {"<token>"}</p> in your header <br /> and boom,
+                you'll get your data.
+                <br />
+                <span className="text-red-200 underline">
+                  And Remember If you forgot your token , your data is gone forever.
+                </span>
+              </p>
+            </span>
+          </button>
+        </div>
+        {message && (
+          <div
+            className="relative flex my-5 items-center bg-blue-500 text-white text-sm font-bold px-4 py-3"
+            role="alert"
+          >
+            <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+              <path d="M12.432 0c1.34 0 2.01.912 2.01 1.957 0 1.305-1.164 2.512-2.679 2.512-1.269 0-2.009-.75-1.974-1.99C9.789 1.436 10.67 0 12.432 0zM8.309 20c-1.058 0-1.833-.652-1.093-3.524l1.214-5.092c.211-.814.246-1.141 0-1.141-.317 0-1.689.562-2.502 1.117l-.528-.88c2.572-2.186 5.531-3.467 6.801-3.467 1.057 0 1.233 1.273.705 3.23l-1.391 5.352c-.246.945-.141 1.271.106 1.271.317 0 1.357-.392 2.379-1.207l.6.814C12.098 19.02 9.365 20 8.309 20z" />
+            </svg>
+            <p>{message}</p>
+            <button onClick={() => setMessage("")} className="text-md absolute right-2 top-4">
+              <FiX />
             </button>
-          )}
-          <div className="flex justify-between gap-10 items-center">
+          </div>
+        )}
+        <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 my-5">
+          <div className="mb-4 relative">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+              Token
+            </label>
+            <input
+              value={token}
+              onChange={(e) => {
+                setToken(e.target.value);
+                setTokenValidated(false);
+              }}
+              className="text-sm shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="username"
+              type="text"
+            />
+            {tokenValidated && (
+              <button
+                onClick={() => {
+                  window.navigator.clipboard.writeText(token);
+                  alert("Token COpied");
+                }}
+                className="absolute bg-white py-1 px-2 top-8 border rounded shadow right-2 hover:shadow-md"
+              >
+                <FiClipboard />
+              </button>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-3 mt-5 items-center justify-between">
             <button
               disabled={loading || tokenValidated || token.trim().length < 1}
-              className="bg-blue-500 rounded-lg p-2 w-2/4"
+              className="disabled:bg-blue-400 bg-blue-500 text-white rounded p-2 text-sm w-full"
               onClick={validateTokenAndGetData}
             >
               Submit
             </button>
-            <p className="w-1/4">Or</p>
-            <button disabled={loading} className="bg-blue-500 rounded-lg p-2 w-1/4" onClick={generateToken}>
-              Generate New Token
+            <button
+              disabled={loading}
+              className="disabled:bg-blue-400 bg-blue-500 text-white rounded p-2 text-sm w-full flex items-center gap-2 justify-center"
+              onClick={generateToken}
+            >
+              <FiTerminal /> Generate New Token
             </button>
           </div>
-          {loading && <p>Processing.....</p>}
-          {tokenValidated && (
-            <>
-              <textarea
-                className="rounded-lg outline-none bg-inherit p-2 border-2 border-blue-500"
-                value={data}
-                placeholder="JSON or string"
-                onChange={(e) => setData(e.target.value)}
-              />
 
-              <button
-                disabled={!data.trim().length || loading}
-                className="bg-blue-500 rounded-lg p-2 w-1/4"
-                onClick={addData}
-              >
-                Add/Update Data
-              </button>
-            </>
+          {tokenValidated && (
+            <textarea
+              className="h-48 mt-5 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={data}
+              placeholder="JSON or string"
+              onChange={(e) => setData(e.target.value)}
+            />
           )}
 
           {data.trim().length > 0 && (
-            <>
-              <h5 className="font-bold text-2xl">Data Visualization</h5>
+            <div className="mt-10">
+              <h5 className="block text-gray-700 text-sm font-bold mb-2">Data Visualization</h5>
               <JSONPretty id="json-pretty" data={data} />
-            </>
+            </div>
           )}
 
           {tokenValidated && (
-            <p className="text-orange-200">
-              How to access data ? <br />
-              Simply use{" "}
-              <span className="underline text-green-500">https://https://nerdev-plum.vercel.app/api/data</span> route
-              and pass authorization : BASIC ##your-token in your header <br /> and boom, you'll get your data.
-              <br />
-              <span className="text-red-500">And Remember If you forgot your token , your data is gone forever.</span>
-            </p>
+            <button
+              disabled={!data.trim().length || loading}
+              onClick={addData}
+              className="disabled:bg-blue-400  mt-5 bg-blue-500 text-white rounded p-2 text-sm w-full flex items-center gap-2 justify-center"
+            >
+              <FiLayers /> Add/Update Data
+            </button>
           )}
         </div>
+
+        <p className="text-center text-gray-500 text-xs">
+          &copy;2022 NERD DEV . Developed by just another nerd developer.
+        </p>
       </div>
     </>
   );
