@@ -84,7 +84,7 @@ const TokenGenerator = () => {
                   <button
                     onClick={() => {
                       window.navigator.clipboard.writeText("https://nerdev-plum.vercel.app/api/data");
-                      alert("Url Copied");
+                      setMessage("Endpoint URL Copied");
                     }}
                     className="bg-blue-500 py-1 px-2 top-8 border rounded shadow right-2 hover:shadow-md"
                   >
@@ -135,7 +135,7 @@ const TokenGenerator = () => {
               <button
                 onClick={() => {
                   window.navigator.clipboard.writeText(token);
-                  alert("Token COpied");
+                  setMessage("Token Copied");
                 }}
                 className="absolute bg-white py-1 px-2 top-8 border rounded shadow right-2 hover:shadow-md"
               >
