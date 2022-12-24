@@ -31,7 +31,7 @@ const TokenGenerator = () => {
       .post("/api/getTokenData", { token })
       .then((res) => {
         setTokenValidated(true);
-        setData(JSON.parse(res.data.data));
+        setData(res.data.data);
         setLoading(false);
       })
       .catch((err) => {

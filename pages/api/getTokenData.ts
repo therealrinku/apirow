@@ -1,6 +1,15 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import db from "../../db/index";
 
+const isJson = (str: string) => {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+};
+
 export default async function getTokenData(req: NextApiRequest, res: NextApiResponse) {
   const query = `SELECT token from tokens WHERE token = '${req.body.token}'`;
   await db
@@ -12,7 +21,8 @@ export default async function getTokenData(req: NextApiRequest, res: NextApiResp
 
       db.query(innerQuery)
         .then((dbRes) => {
-          res.status(200).json({ data: dbRes.rows[0].data });
+          const data = dbRes.rows[0].data;
+          res.status(200).json({ data });
         })
         .catch((err) => {
           res.status(500).json({ error: err.message });
