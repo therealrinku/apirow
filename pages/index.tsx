@@ -47,7 +47,7 @@ const TokenGenerator = () => {
   const addData = () => {
     setLoading(true);
     axios
-      .post("/api/addData", { key: token, data: JSON.stringify(data) })
+      .post("/api/addData", { key: token, data: data })
       .then((res) => {
         alert("DAtA added . you can access it using your token. ");
         setLoading(false);

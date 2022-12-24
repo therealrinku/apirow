@@ -1,6 +1,15 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import db from "../../db/index";
 
+const isJson = (str: string) => {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+};
+
 export default async function getData(req: NextApiRequest, res: NextApiResponse) {
   //
   const auth = req.headers.authorization?.split(" ") || [];
@@ -20,8 +29,9 @@ export default async function getData(req: NextApiRequest, res: NextApiResponse)
 
       db.query(innerQuery)
         .then((dbRes) => {
+          const data = dbRes.rows[0].data;
           dbRes.rowCount > 0
-            ? res.status(200).json({ data: JSON.parse(dbRes.rows[0].data) })
+            ? res.status(200).json({ data: isJson(data) ? JSON.parse(data) : data })
             : res.status(200).json({ data: "" });
         })
         .catch((err) => {
