@@ -76,7 +76,7 @@ const TokenGenerator = () => {
         <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet" />
       </Head>
 
-      <div className="container bg-slate-700 h-screen w-screen text-white mx-auto px-4 py-8">
+      <div className="bg-slate-700 h-auto min-h-screen  text-white mx-auto px-4 py-8">
         <h5 className="text-center my-10 text-2xl">Nerd Dev</h5>
 
         <div className="w-11/12 mt-10 mx-auto flex flex-col gap-10">
@@ -90,6 +90,18 @@ const TokenGenerator = () => {
             className="rounded-lg outline-none bg-inherit p-2 border-2 border-blue-500"
             placeholder="Submit your token here"
           />
+
+          {tokenValidated && (
+            <button
+              className="bg-blue-500 rounded-lg p-2 w-100"
+              onClick={() => {
+                window.navigator.clipboard.writeText(token);
+                alert("Token COpied");
+              }}
+            >
+              Copy Token
+            </button>
+          )}
           <div className="flex justify-between gap-10 items-center">
             <button
               disabled={loading || tokenValidated || token.trim().length < 1}
@@ -119,11 +131,22 @@ const TokenGenerator = () => {
           >
             Add/Update Data
           </button>
-          <JSONPretty id="json-pretty" data={data} />
-          <p className="text-red-500">
+
+          {data.trim().length > 0 && (
+            <>
+              <h5 className="font-bold text-2xl">Data Visualization</h5>
+              <JSONPretty id="json-pretty" data={data} />
+            </>
+          )}
+
+          <p className="text-orange-200">
             How to access data ? <br />
-            Simply use /data route and pass authorization : BASIC ##your-token in your header <br /> and boom, you'll
-            get your data
+            Simply use <span className="underline text-green-500">
+              https://https://nerdev-plum.vercel.app/data
+            </span>{" "}
+            route and pass authorization : BASIC ##your-token in your header <br /> and boom, you'll get your data.
+            <br />
+            <span className="text-red-500">And Remember If you forgot your token , your data is gone forever.</span>
           </p>
         </div>
       </div>
