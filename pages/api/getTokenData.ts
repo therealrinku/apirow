@@ -14,7 +14,8 @@ export default async function getTokenData(req: NextApiRequest, res: NextApiResp
         .then((dbRes) => {
           if (dbRes.rowCount < 1) return res.status(200).json({ data: "" });
           const data = dbRes.rows[0].data;
-          res.status(200).json({ data });
+          const editable = dbRes.rows[0].editable;
+          res.status(200).json({ data, editable });
         })
         .catch((err) => {
           res.status(500).json({ error: err.message });

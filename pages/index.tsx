@@ -26,9 +26,14 @@ const TokenGenerator = () => {
   const [tokenValidated, setTokenValidated] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const [hideCheckbox, setHideCheckbox] = useState(true);
+
   const [message, setMessage] = useState("");
 
   const [data, setData] = useState("");
+  const [editable, setEditable] = useState(true);
+
+  const [isEditable, setIsEditable] = useState(true);
 
   const generateToken = () => {
     setLoading(true);
@@ -39,6 +44,7 @@ const TokenGenerator = () => {
         setTokenValidated(true);
         setLoading(false);
         setMessage("Successfully generated a token.");
+        setHideCheckbox(false);
         setData("");
       })
       .catch((err) => {
@@ -54,6 +60,8 @@ const TokenGenerator = () => {
       .then((res) => {
         setTokenValidated(true);
         setData(res.data.data);
+        setHideCheckbox(true);
+        setIsEditable(res.data.data.editable);
         setLoading(false);
       })
       .catch((err) => {
@@ -69,7 +77,7 @@ const TokenGenerator = () => {
   const addData = () => {
     setLoading(true);
     axios
-      .post("/api/addData", { key: token, data: data })
+      .post("/api/addData", { key: token, data: data, editable })
       .then(() => {
         setMessage("Data/edited added successfully. You can access it via API.");
         setLoading(false);
@@ -168,6 +176,21 @@ const TokenGenerator = () => {
             )}
           </div>
 
+          {!hideCheckbox && (
+            <div className="flex items-center">
+              <input
+                onChange={() => setEditable((prev) => !prev)}
+                id="checked-checkbox"
+                type="checkbox"
+                defaultChecked
+                className="w-4 h-4 bg-gray-100 rounded border-gray-300"
+              />
+              <label htmlFor="checked-checkbox" className="ml-2 text-sm font-medium ">
+                Editable Next Time
+              </label>
+            </div>
+          )}
+
           <div className="flex flex-col gap-3 mt-5 items-center justify-between">
             <button
               disabled={loading || tokenValidated || token.trim().length < 1}
@@ -185,7 +208,7 @@ const TokenGenerator = () => {
             </button>
           </div>
 
-          {tokenValidated && (
+          {tokenValidated && isEditable && (
             <textarea
               className="h-48 mt-5 text-sm shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               value={data}
@@ -201,7 +224,7 @@ const TokenGenerator = () => {
             </div>
           )}
 
-          {tokenValidated && (
+          {tokenValidated && isEditable && (
             <button
               disabled={!data.trim().length || loading}
               onClick={addData}

@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import db from "../../db/index";
 
 export default function addData(req: NextApiRequest, res: NextApiResponse) {
-  const query = `INSERT INTO data(data,key) VALUES('${req.body.data}','${req.body.key}') ON CONFLICT(key) DO UPDATE SET data='${req.body.data}'`;
+  const query = `INSERT INTO data(data,key,editable) VALUES('${req.body.data}','${req.body.key}',${req.body.editable}) ON CONFLICT(key) DO UPDATE SET data='${req.body.data}'`;
 
   db.query(query)
     .then(() => {
