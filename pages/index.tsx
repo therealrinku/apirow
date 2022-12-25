@@ -20,7 +20,6 @@ import {
   FiTerminal,
   FiX,
 } from "react-icons/fi";
-import Image from "next/image";
 
 const TokenGenerator = () => {
   const [token, setToken] = useState("");
@@ -39,9 +38,11 @@ const TokenGenerator = () => {
         setToken(res.data.token);
         setTokenValidated(true);
         setLoading(false);
+        setMessage("Successfully generated a token.");
         setData("");
       })
       .catch((err) => {
+        setMessage(`Error. ${err.message}`);
         setLoading(false);
       });
   };
@@ -58,7 +59,7 @@ const TokenGenerator = () => {
       .catch((err) => {
         if (err.response.data.message === "Invalid Token") {
           setToken("");
-          setMessage("Invalid Token");
+          setMessage("Error. Invalid Token");
           setTokenValidated(false);
         }
         setLoading(false);
@@ -69,12 +70,12 @@ const TokenGenerator = () => {
     setLoading(true);
     axios
       .post("/api/addData", { key: token, data: data })
-      .then((res) => {
-        setMessage("Data/edited added successfully. You can access it via REST API.");
+      .then(() => {
+        setMessage("Data/edited added successfully. You can access it via API.");
         setLoading(false);
       })
       .catch((err) => {
-        setMessage(err.message);
+        setMessage(`Error. ${err.message}`);
         setLoading(false);
       });
   };
@@ -124,7 +125,9 @@ const TokenGenerator = () => {
         </div>
         {message && (
           <div
-            className="relative flex my-5 items-center bg-blue-500 text-white text-sm font-bold px-4 py-3"
+            className={`${
+              message.includes("Error") ? "bg-red-500" : "bg-blue-500"
+            } relative flex my-5 items-center rounded  text-white text-sm font-bold px-4 py-3`}
             role="alert"
           >
             <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -132,7 +135,7 @@ const TokenGenerator = () => {
             </svg>
             <p>{message}</p>
             <button onClick={() => setMessage("")} className="text-md absolute right-2 top-4">
-              <FiX />
+              <FiX size={17} />
             </button>
           </div>
         )}
@@ -184,7 +187,7 @@ const TokenGenerator = () => {
 
           {tokenValidated && (
             <textarea
-              className="h-48 mt-5 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="h-48 mt-5 text-sm shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               value={data}
               placeholder="JSON or string"
               onChange={(e) => setData(e.target.value)}
