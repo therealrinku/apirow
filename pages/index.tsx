@@ -3,7 +3,24 @@ import Head from "next/head";
 import JSONPretty from "react-json-pretty";
 import "react-json-pretty/themes/monikai.css";
 import axios from "axios";
-import { FiClipboard, FiInfo, FiLayers, FiPlus, FiSun, FiTerminal, FiX } from "react-icons/fi";
+import {
+  FiAlertCircle,
+  FiAperture,
+  FiClipboard,
+  FiCornerDownLeft,
+  FiCornerDownRight,
+  FiFacebook,
+  FiFlag,
+  FiInfo,
+  FiLayers,
+  FiPlus,
+  FiSave,
+  FiScissors,
+  FiSun,
+  FiTerminal,
+  FiX,
+} from "react-icons/fi";
+import Image from "next/image";
 
 const TokenGenerator = () => {
   const [token, setToken] = useState("");
@@ -69,14 +86,14 @@ const TokenGenerator = () => {
         <meta name="description" content="Developed by Nerd, for nerds" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-        <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Manrope&display=swap" rel="stylesheet" />
         <link rel="shortcut icon" href="https://img.icons8.com/fluency/2x/nerd.png" />
       </Head>
 
       <div className="w-full max-w-md my-10 mx-auto">
-        <div className="flex items-center gap-10 justify-between shadow  p-2">
-          <p className="font-bold text-blue-500 text-lg">Nerd Dev</p>
-          <button className="tooltip bg-white py-1 px-2  border rounded shadow hover:shadow-md">
+        <div className="flex items-center justify-between border rounded  p-2">
+          <p className="font-bold text-blue-500 text-lg ">Nerd Dev</p>
+          <button className="tooltip bg-white py-1 px-2 border rounded shadow hover:shadow-md">
             <FiInfo />
             <span className="tooltiptext bg-blue-500 shadow">
               <p className="text-sm">
@@ -119,7 +136,7 @@ const TokenGenerator = () => {
             </button>
           </div>
         )}
-        <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 my-5">
+        <div className="bg-white shadow-md rounded border px-8 pt-6 pb-8 my-5">
           <div className="mb-4 relative">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
               Token
@@ -151,10 +168,10 @@ const TokenGenerator = () => {
           <div className="flex flex-col gap-3 mt-5 items-center justify-between">
             <button
               disabled={loading || tokenValidated || token.trim().length < 1}
-              className="disabled:bg-blue-400 bg-blue-500 text-white rounded p-2 text-sm w-full"
+              className="disabled:bg-blue-400 bg-blue-500 text-white rounded p-2 text-sm w-full flex items-center gap-2 justify-center"
               onClick={validateTokenAndGetData}
             >
-              Submit
+              <FiCornerDownRight /> Submit
             </button>
             <button
               disabled={loading}
