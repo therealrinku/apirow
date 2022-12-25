@@ -3,23 +3,7 @@ import Head from "next/head";
 import JSONPretty from "react-json-pretty";
 import "react-json-pretty/themes/monikai.css";
 import axios from "axios";
-import {
-  FiAlertCircle,
-  FiAperture,
-  FiClipboard,
-  FiCornerDownLeft,
-  FiCornerDownRight,
-  FiFacebook,
-  FiFlag,
-  FiInfo,
-  FiLayers,
-  FiPlus,
-  FiSave,
-  FiScissors,
-  FiSun,
-  FiTerminal,
-  FiX,
-} from "react-icons/fi";
+import { FiClipboard, FiCornerDownRight, FiInfo, FiLayers, FiTerminal, FiX } from "react-icons/fi";
 
 const TokenGenerator = () => {
   const [token, setToken] = useState("");
@@ -61,7 +45,7 @@ const TokenGenerator = () => {
         setTokenValidated(true);
         setData(res.data.data);
         setHideCheckbox(true);
-        setIsEditable(res.data.data.editable);
+        setIsEditable(res.data.editable);
         setLoading(false);
       })
       .catch((err) => {
