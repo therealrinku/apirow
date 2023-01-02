@@ -86,10 +86,10 @@ const TokenGenerator = () => {
       <div className="w-full max-w-md my-10 mx-auto">
         <div className="flex items-center justify-between border rounded  p-2">
           <p className="font-bold text-blue-500 text-lg ">Nerd Dev</p>
-          <button className="tooltip bg-white py-1 px-2 border rounded shadow hover:shadow-md">
+          <div className="tooltip bg-white py-1 px-2 border rounded shadow hover:shadow-md">
             <FiInfo />
             <span className="tooltiptext bg-blue-500 shadow">
-              <p className="text-sm">
+              <div className="text-sm">
                 How to access data ? <br />
                 Simply submit GET or POST request to{" "}
                 <b className="underline text-red-200 d-flex">
@@ -111,9 +111,9 @@ const TokenGenerator = () => {
                 <span className="text-red-200 underline">
                   And Remember If you forgot your token , your data is gone forever.
                 </span>
-              </p>
+              </div>
             </span>
-          </button>
+          </div>
         </div>
         {message && (
           <div
