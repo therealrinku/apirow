@@ -105,7 +105,7 @@ const TokenGenerator = () => {
                   </button>
                 </b>{" "}
                 route and pass
-                <p className="font-bold underline">authorization : BASIC {"<token>"}</p> in your header <br /> and boom,
+                <p className="font-bold underline">x-content-key:{"<token>"}</p> in your header <br /> and boom,
                 you'll get your data.
                 <br />
                 <span className="text-red-200 underline">

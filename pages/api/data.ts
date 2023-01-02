@@ -12,20 +12,19 @@ const isJson = (str: string) => {
 
 export default async function getData(req: NextApiRequest, res: NextApiResponse) {
   //
-  const auth = req.headers.authorization?.split(" ") || [];
-
-  if (!auth?.length || auth[0] !== "BASIC" || !auth[1]) {
-    return res.status(401).send({ error: "Validation Failed" });
+  const content_key = req.headers["x-content-key"];
+  if (!content_key) {
+    return res.status(401).send({ error: "Content Key not found." });
   }
 
-  const query = `SELECT token from tokens WHERE token = '${auth[1]}'`;
+  const query = `SELECT token from tokens WHERE token = '${content_key}'`;
 
   await db
     .query(query)
     .then((dbRes) => {
       if (dbRes.rowCount < 1) return res.status(401).send({ message: "Invalid Token" });
 
-      const innerQuery = `SELECT * FROM data WHERE key = '${auth[1]}'`;
+      const innerQuery = `SELECT * FROM data WHERE key = '${content_key}'`;
 
       db.query(innerQuery)
         .then((dbRes) => {
@@ -34,11 +33,11 @@ export default async function getData(req: NextApiRequest, res: NextApiResponse)
             ? res.status(200).json({ data: isJson(data) ? JSON.parse(data) : data })
             : res.status(200).json({ data: "" });
         })
-        .catch((err) => {
+        .catch(() => {
           res.status(401).json({ error: "Invalid Token" });
         });
     })
-    .catch((err) => {
+    .catch(() => {
       res.status(401).json({ error: "Invalid Token" });
     });
 }
