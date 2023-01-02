@@ -34,10 +34,10 @@ export default async function getData(req: NextApiRequest, res: NextApiResponse)
             : res.status(200).json({ data: "" });
         })
         .catch(() => {
-          res.status(401).json({ error: "Invalid Token" });
+          res.status(401).json({ error: "Invalid content key" });
         });
     })
     .catch(() => {
-      res.status(401).json({ error: "Invalid Token" });
+      res.status(401).json({ error: "Invalid content key" });
     });
 }
