@@ -14,7 +14,7 @@ export default async function getData(req: NextApiRequest, res: NextApiResponse)
   //
   const content_key = req.headers["x-content-key"];
   if (!content_key) {
-    return res.status(401).send({ error: "Content key not found." });
+    return res.status(401).send({ error: "Content key not found" });
   }
 
   const query = `SELECT token from tokens WHERE token = '${content_key}'`;
