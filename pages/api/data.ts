@@ -22,7 +22,7 @@ export default async function getData(req: NextApiRequest, res: NextApiResponse)
   await db
     .query(query)
     .then((dbRes) => {
-      if (dbRes.rowCount < 1) return res.status(401).send({ message: "Invalid Token" });
+      if (dbRes.rowCount < 1) return res.status(401).send({ message: "Content key not found" });
 
       const innerQuery = `SELECT * FROM data WHERE key = '${content_key}'`;
 
@@ -34,10 +34,10 @@ export default async function getData(req: NextApiRequest, res: NextApiResponse)
             : res.status(200).json({ data: "" });
         })
         .catch(() => {
-          res.status(401).json({ error: "Invalid content key" });
+          res.status(401).json({ error: "Content key not found" });
         });
     })
     .catch(() => {
-      res.status(401).json({ error: "Invalid content key" });
+      res.status(401).json({ error: "Content key not found" });
     });
 }
