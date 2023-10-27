@@ -12,6 +12,14 @@ const isJson = (str: string) => {
 
 export default async function getData(req: NextApiRequest, res: NextApiResponse) {
   //
+  res.setHeader('Access-Control-Allow-Credentials', true)
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  )
+  
   const content_key = req.headers["x-content-key"];
   if (!content_key) {
     return res.status(401).send({ error: "Content key not found or invalid content key" });
