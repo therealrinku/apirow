@@ -10,11 +10,18 @@ const nextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
-  headers: [
+  async headers() {
+    return [
+      {
+        source: "/api/:path*",
+        headers: [
    { key: "Access-Control-Allow-Credentials", value: "true" },
    { key: "Access-Control-Allow-Origin", value: "http://localhost:3000" },
     { key: "Access-Control-Allow-Origin", value: "https://robosocial.web.app" },
   ]
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
