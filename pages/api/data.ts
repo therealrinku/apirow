@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import db from "../../db/index";
+import cors from "cors";
 
 const isJson = (str: string) => {
   try {
@@ -10,16 +11,18 @@ const isJson = (str: string) => {
   return true;
 };
 
+// Initialize the cors middleware
+const corsMiddleware = cors({
+  origin: "*",
+  methods: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+  allowedHeaders: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
+  credentials: true, // Allow credentials (cookies, HTTP authentication) to be sent cross-origin
+});
+
 export default async function getData(req: NextApiRequest, res: NextApiResponse) {
-  //
-  res.setHeader('Access-Control-Allow-Credentials', 'true')
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  )
-  
+  // Apply the CORS middleware
+  corsMiddleware(req, res);
+
   const content_key = req.headers["x-content-key"];
   if (!content_key) {
     return res.status(401).send({ error: "Content key not found or invalid content key" });
