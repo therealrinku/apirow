@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { Fragment, useState } from "react";
 import Head from "next/head";
 import JSONPretty from "react-json-pretty";
 import "react-json-pretty/themes/monikai.css";
 import axios from "axios";
-import { FiClipboard, FiCornerDownRight, FiInfo, FiLayers, FiTerminal, FiX } from "react-icons/fi";
+import { FiAlertCircle, FiArrowUpRight, FiClipboard, FiCode, FiHardDrive, FiX } from "react-icons/fi";
 
 const TokenGenerator = () => {
   const [token, setToken] = useState("");
@@ -18,6 +18,8 @@ const TokenGenerator = () => {
   const [editable, setEditable] = useState(true);
 
   const [isEditable, setIsEditable] = useState(true);
+
+  const [currTab, setCurrTab] = useState("data-edit");
 
   const generateToken = () => {
     setLoading(true);
@@ -63,7 +65,7 @@ const TokenGenerator = () => {
     axios
       .post("/api/addData", { key: token, data: data, editable })
       .then(() => {
-        setMessage("Data/edited added successfully. You can access it via API.");
+        setMessage("Data updated successfully. You can access it via API.");
         setLoading(false);
       })
       .catch((err) => {
@@ -75,154 +77,179 @@ const TokenGenerator = () => {
   return (
     <>
       <Head>
-        <title>Nerd Dev</title>
-        <meta name="description" content="Developed by Nerd, for nerds" />
+        <title>robojson</title>
+        <meta name="description" content="robojson, play with json" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link href="https://fonts.googleapis.com/css2?family=Manrope&display=swap" rel="stylesheet" />
-        <link rel="shortcut icon" href="https://img.icons8.com/fluency/2x/nerd.png" />
+        <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/1828/1828231.png" />
       </Head>
 
-      <div className="w-full max-w-md my-10 mx-auto">
-        <div className="flex items-center justify-between border rounded  p-2">
-          <p className="font-bold text-blue-500 text-lg ">Nerd Dev</p>
-          <div className="tooltip bg-white py-1 px-2 border rounded shadow hover:shadow-md">
-            <FiInfo />
-            <span className="tooltiptext bg-blue-500 shadow">
-              <div className="text-sm">
-                How to access data ? <br />
-                Simply submit GET or POST request to{" "}
-                <b className="underline text-red-200 d-flex">
-                  https://nerdev-plum.vercel.app/api/data{" "}
-                  <button
-                    onClick={() => {
-                      window.navigator.clipboard.writeText("https://nerdev-plum.vercel.app/api/data");
-                      setMessage("Endpoint URL Copied");
-                    }}
-                    className="bg-blue-500 py-1 px-2 top-8 border rounded shadow right-2 hover:shadow-md"
-                  >
-                    <FiClipboard />
-                  </button>
-                </b>{" "}
-                route and pass
-                <p className="font-bold underline">x-content-key:{"<token>"}</p> in your header <br /> and boom,
-                you'll get your data.
-                <br />
-                <span className="text-red-200 underline">
-                  And Remember If you forgot your token , your data is gone forever.
-                </span>
-              </div>
-            </span>
-          </div>
-        </div>
-        {message && (
-          <div
-            className={`${
-              message.includes("Error") ? "bg-red-500" : "bg-blue-500"
-            } relative flex my-5 items-center rounded  text-white text-sm font-bold px-4 py-3`}
-            role="alert"
-          >
-            <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-              <path d="M12.432 0c1.34 0 2.01.912 2.01 1.957 0 1.305-1.164 2.512-2.679 2.512-1.269 0-2.009-.75-1.974-1.99C9.789 1.436 10.67 0 12.432 0zM8.309 20c-1.058 0-1.833-.652-1.093-3.524l1.214-5.092c.211-.814.246-1.141 0-1.141-.317 0-1.689.562-2.502 1.117l-.528-.88c2.572-2.186 5.531-3.467 6.801-3.467 1.057 0 1.233 1.273.705 3.23l-1.391 5.352c-.246.945-.141 1.271.106 1.271.317 0 1.357-.392 2.379-1.207l.6.814C12.098 19.02 9.365 20 8.309 20z" />
-            </svg>
-            <p>{message}</p>
-            <button onClick={() => setMessage("")} className="text-md absolute right-2 top-4">
-              <FiX size={17} />
-            </button>
-          </div>
-        )}
-        <div className="bg-white shadow-md rounded border px-8 pt-6 pb-8 my-5">
-          <div className="mb-4 relative">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-              Token
-            </label>
-            <input
-              value={token}
-              onChange={(e) => {
-                setToken(e.target.value);
-                setTokenValidated(false);
-                setData("");
-              }}
-              className="text-sm shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
-              type="text"
-            />
-            {tokenValidated && (
-              <button
-                onClick={() => {
-                  window.navigator.clipboard.writeText(token);
-                  setMessage("Token Copied");
-                }}
-                className="absolute bg-white py-1 px-2 top-8 border rounded shadow right-2 hover:shadow-md"
-              >
-                <FiClipboard />
-              </button>
-            )}
-          </div>
-
-          {!hideCheckbox && (
-            <div className="flex items-center">
-              <input
-                onChange={() => setEditable((prev) => !prev)}
-                id="checked-checkbox"
-                type="checkbox"
-                defaultChecked
-                className="w-4 h-4 bg-gray-100 rounded border-gray-300"
-              />
-              <label htmlFor="checked-checkbox" className="ml-2 text-sm font-medium ">
-                Editable Next Time
+      <div className="w-[85%] md:w-[75%] lg:w-[85%] mt-5 mx-auto flex flex-col lg:flex-row justify-center gap-24">
+        <section className="w-full lg:w-[40%]">
+          <div className="bg-white shadow-md border px-8 pt-6 pb-8 my-5">
+            <div className="mb-4 relative">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+                Token
               </label>
+              <input
+                value={token}
+                onChange={(e) => {
+                  setToken(e.target.value);
+                  setTokenValidated(false);
+                  setData("");
+                }}
+                className="text-sm shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="username"
+                type="text"
+              />
+              {tokenValidated && (
+                <button
+                  onClick={() => {
+                    window.navigator.clipboard.writeText(token);
+                    setMessage("Token Copied");
+                  }}
+                  className="absolute bg-white py-1 px-2 top-8 border shadow right-2 hover:shadow-md"
+                >
+                  <FiClipboard />
+                </button>
+              )}
             </div>
-          )}
 
-          <div className="flex flex-col gap-3 mt-5 items-center justify-between">
+            {!hideCheckbox && (
+              <div className="flex items-center">
+                <input
+                  onChange={() => setEditable((prev) => !prev)}
+                  id="checked-checkbox"
+                  type="checkbox"
+                  defaultChecked
+                  className="w-4 h-4 bg-gray-100 rounded border-gray-300"
+                />
+                <label htmlFor="checked-checkbox" className="ml-2 text-sm font-medium ">
+                  Editable next time
+                </label>
+              </div>
+            )}
+
+            <div className="flex flex-col gap-3 mt-10 items-center justify-between">
+              <button
+                disabled={loading || tokenValidated || token.trim().length < 1}
+                className="disabled:bg-blue-400 bg-blue-500 text-white p-2 text-sm w-full flex items-center gap-2 justify-center"
+                onClick={validateTokenAndGetData}
+              >
+                <FiArrowUpRight /> Submit
+              </button>
+              <button
+                disabled={loading}
+                className="disabled:bg-blue-400 bg-blue-500 text-white p-2 text-sm w-full flex items-center gap-2 justify-center"
+                onClick={generateToken}
+              >
+                <FiCode /> Generate new token
+              </button>
+            </div>
+          </div>
+
+          <p className="text-gray-500 text-xs">&copy;2023 robojson. All rights not reserved.</p>
+        </section>
+
+        <section className={`w-full lg:w-[60%]`}>
+          <div className="py-2 flex items-center gap-4">
             <button
-              disabled={loading || tokenValidated || token.trim().length < 1}
-              className="disabled:bg-blue-400 bg-blue-500 text-white rounded p-2 text-sm w-full flex items-center gap-2 justify-center"
-              onClick={validateTokenAndGetData}
+              disabled={currTab === "data-edit"}
+              onClick={() => setCurrTab("data-edit")}
+              className={`text-sm font-bold opacity-50 ${currTab === "data-edit" && "opacity-100"}`}
             >
-              <FiCornerDownRight /> Submit
+              Edit
             </button>
             <button
-              disabled={loading}
-              className="disabled:bg-blue-400 bg-blue-500 text-white rounded p-2 text-sm w-full flex items-center gap-2 justify-center"
-              onClick={generateToken}
+              disabled={currTab === "data-preview"}
+              onClick={() => setCurrTab("data-preview")}
+              className={`text-sm font-bold opacity-50 ${currTab === "data-preview" && "opacity-100"}`}
             >
-              <FiTerminal /> Generate New Token
+              Preview
+            </button>
+
+            <button
+              disabled={currTab === "instructions"}
+              onClick={() => setCurrTab("instructions")}
+              className={`text-sm font-bold opacity-50 ${currTab === "instructions" && "opacity-100"}`}
+            >
+              Instructions
             </button>
           </div>
 
-          {tokenValidated && isEditable && (
-            <textarea
-              className="h-48 mt-5 text-sm shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              value={data}
-              placeholder="JSON or string"
-              onChange={(e) => setData(e.target.value)}
-            />
+          {tokenValidated && isEditable && currTab === "data-edit" && (
+            <Fragment>
+              <textarea
+                className="h-[300px] shadow-md text-sm border border-t-0 appearance-none  w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                value={data}
+                placeholder="JSON or string"
+                onChange={(e) => setData(e.target.value)}
+              />
+
+              <button
+                disabled={!data.trim().length || loading}
+                onClick={addData}
+                className="disabled:bg-blue-400 w-full mt-10 bg-blue-500 text-white  p-2 text-sm flex items-center gap-2 justify-center"
+              >
+                <FiHardDrive /> Update data
+              </button>
+            </Fragment>
           )}
 
-          {data.trim().length > 0 && (
-            <div className="mt-10">
-              <h5 className="block text-gray-700 text-sm font-bold mb-2">Data Visualization</h5>
-              <JSONPretty id="json-pretty" data={data} />
+          {currTab === "data-preview" && data.trim().length > 0 && <JSONPretty id="json-pretty" data={data} />}
+
+          {currTab === "instructions" && (
+            <div className="mt-2 shadow bg-white px-4 py-2">
+              <p className="text-sm border-b pb-2 font-bold">How to access data ? </p>
+
+              <p className="mt-3 text-sm">
+                <p>const API_URL = 'https://robojson.vercel.app/api/data'</p>
+                <p className="mt-5 border-b">USING FETCH API</p>
+                {`await fetch(API_URL, {
+  headers : {
+    "x-content-key" : "your-data-key-here"
+  }
+})`}
+
+                <p className="mt-5 border-b">USING AXIOS</p>
+
+                <p>{`await axios.get(API_URL, {
+  headers : {
+    "x-content-key" : "your-data-key-here"
+  }
+})`}</p>
+
+                <p className="mt-5 border-b mb-2">SAMPLE RESPONSE</p>
+                <JSONPretty
+                  id="code"
+                  data={{
+                    data: {
+                      id: 1,
+                      title: "This is your data?",
+                    },
+                  }}
+                />
+              </p>
             </div>
           )}
-
-          {tokenValidated && isEditable && (
-            <button
-              disabled={!data.trim().length || loading}
-              onClick={addData}
-              className="disabled:bg-blue-400  mt-5 bg-blue-500 text-white rounded p-2 text-sm w-full flex items-center gap-2 justify-center"
-            >
-              <FiLayers /> Add/Update Data
-            </button>
-          )}
-        </div>
-
-        <p className="text-center text-gray-500 text-xs">
-          &copy;2022 NERD DEV . Developed by just another nerd developer.
-        </p>
+        </section>
       </div>
+
+      {message && (
+        <div
+          className={`${
+            message.includes("Error") ? "bg-red-500" : "bg-blue-500"
+          }  fixed bottom-5 left-5 flex items-center  text-white text-sm font-bold px-4 py-3`}
+          role="alert"
+        >
+          <FiAlertCircle size={18} />
+          <p className="ml-2">{message}</p>
+          <button onClick={() => setMessage("")} className="text-md ml-5">
+            <FiX size={18} />
+          </button>
+        </div>
+      )}
     </>
   );
 };
