@@ -189,7 +189,7 @@ const TokenGenerator = () => {
           {tokenValidated && isEditable && currTab === "data-edit" && (
             <Fragment>
               <textarea
-                className="h-[300px] shadow-md text-sm border border-t-0 appearance-none  w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="h-[300px] mt-3 text-sm border appearance-none  w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 value={data}
                 placeholder="JSON or string"
                 onChange={(e) => setData(e.target.value)}
