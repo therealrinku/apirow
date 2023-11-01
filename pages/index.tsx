@@ -4,6 +4,7 @@ import JSONPretty from "react-json-pretty";
 import "react-json-pretty/themes/monikai.css";
 import axios from "axios";
 import { FiAlertCircle, FiArrowUpRight, FiClipboard, FiCode, FiHardDrive, FiX } from "react-icons/fi";
+import Instructions from "../components/Instructions";
 
 const TokenGenerator = () => {
   const [token, setToken] = useState("");
@@ -87,9 +88,9 @@ const TokenGenerator = () => {
         <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/1828/1828231.png" />
       </Head>
 
-      <div className="w-[85%] md:w-[75%] lg:w-[85%] mt-5 mx-auto flex flex-col lg:flex-row justify-center gap-24">
-        <section className="w-full lg:w-[40%]">
-          <div className="bg-white shadow-md border px-8 pt-6 pb-8 my-5">
+      <div className="bg-white border-0 md:border lg:h-screen w-[85%] md:w-[75%] lg:w-[85%] mx-auto flex flex-col lg:flex-row justify-center gap-12 lg:gap-0">
+        <section className="w-full lg:w-[40%] px-0 md:px-5 lg:px-8 border-0 lg:border-r">
+          <div className="pt-6 pb-8 my-5">
             <div className="mb-4 relative">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
                 Token
@@ -154,7 +155,7 @@ const TokenGenerator = () => {
           <p className="text-gray-500 text-xs">&copy;2023 robojson. All rights not reserved.</p>
         </section>
 
-        <section className={`w-full lg:w-[60%]`}>
+        <section className={`w-full lg:w-[60%] px-0 md:px-5 lg:px-8`}>
           <div className="py-2 flex items-center gap-4">
             {tokenValidated && (
               <button
@@ -206,40 +207,7 @@ const TokenGenerator = () => {
 
           {currTab === "data-preview" && data.trim().length > 0 && <JSONPretty id="json-pretty" data={data} />}
 
-          {currTab === "instructions" && (
-            <div className="mt-2 shadow bg-white px-4 py-2">
-              <p className="text-sm border-b pb-2 font-bold">How to access data ? </p>
-
-              <p className="mt-3 text-sm">
-                <p>const API_URL = 'https://robojson.vercel.app/api/data'</p>
-                <p className="mt-5 border-b">USING FETCH API</p>
-                {`await fetch(API_URL, {
-  headers : {
-    "x-content-key" : "your-data-key-here"
-  }
-})`}
-
-                <p className="mt-5 border-b">USING AXIOS</p>
-
-                <p>{`await axios.get(API_URL, {
-  headers : {
-    "x-content-key" : "your-data-key-here"
-  }
-})`}</p>
-
-                <p className="mt-5 border-b mb-2">SAMPLE RESPONSE</p>
-                <JSONPretty
-                  id="code"
-                  data={{
-                    data: {
-                      id: 1,
-                      title: "This is your data?",
-                    },
-                  }}
-                />
-              </p>
-            </div>
-          )}
+          {currTab === "instructions" && <Instructions />}
         </section>
       </div>
 
