@@ -19,7 +19,7 @@ const TokenGenerator = () => {
 
   const [isEditable, setIsEditable] = useState(true);
 
-  const [currTab, setCurrTab] = useState("data-edit");
+  const [currTab, setCurrTab] = useState("instructions");
 
   const generateToken = () => {
     setLoading(true);
@@ -29,6 +29,7 @@ const TokenGenerator = () => {
         setToken(res.data.token);
         setTokenValidated(true);
         setLoading(false);
+        setCurrTab("data-edit");
         setMessage("Successfully generated a token.");
         setHideCheckbox(false);
         setData("");
@@ -47,6 +48,7 @@ const TokenGenerator = () => {
         setTokenValidated(true);
         setData(res.data.data);
         setHideCheckbox(true);
+        setCurrTab("data-edit");
         setIsEditable(res.data.editable);
         setLoading(false);
       })
@@ -154,20 +156,25 @@ const TokenGenerator = () => {
 
         <section className={`w-full lg:w-[60%]`}>
           <div className="py-2 flex items-center gap-4">
-            <button
-              disabled={currTab === "data-edit"}
-              onClick={() => setCurrTab("data-edit")}
-              className={`text-sm font-bold opacity-50 ${currTab === "data-edit" && "opacity-100"}`}
-            >
-              Edit
-            </button>
-            <button
-              disabled={currTab === "data-preview"}
-              onClick={() => setCurrTab("data-preview")}
-              className={`text-sm font-bold opacity-50 ${currTab === "data-preview" && "opacity-100"}`}
-            >
-              Preview
-            </button>
+            {tokenValidated && (
+              <button
+                disabled={currTab === "data-edit"}
+                onClick={() => setCurrTab("data-edit")}
+                className={`text-sm font-bold opacity-50 ${currTab === "data-edit" && "opacity-100"}`}
+              >
+                Edit
+              </button>
+            )}
+
+            {data.trim()?.length > 0 && (
+              <button
+                disabled={currTab === "data-preview"}
+                onClick={() => setCurrTab("data-preview")}
+                className={`text-sm font-bold opacity-50 ${currTab === "data-preview" && "opacity-100"}`}
+              >
+                Preview
+              </button>
+            )}
 
             <button
               disabled={currTab === "instructions"}
