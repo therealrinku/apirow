@@ -37,7 +37,7 @@ To run this project locally, follow these steps:
 3. Get your postgres setup and add connection string to .env(name is DB_URL) . I got my postgreSQL setup from elephantSQL.com
 
 4. Run the database/createTables.js script in the database directory for creating the required database tables(data, tokens)
- ```bash
+   ```bash
    node createTables.js
 
 5. Run the project.
