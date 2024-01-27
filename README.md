@@ -22,7 +22,6 @@ To run this project locally, follow these steps:
 ### Prerequisites
 
 - Node.js installed
-- Firebase account for file storage setup
 
 ### Installation
 
