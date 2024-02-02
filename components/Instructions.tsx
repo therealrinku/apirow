@@ -1,6 +1,17 @@
+import { FiClipboard } from "react-icons/fi";
 import JSONPretty from "react-json-pretty";
 
 export default function Instructions() {
+  function copyFetchReq() {
+    window.navigator.clipboard.writeText(`
+    const API_URL = 'https://robojson.vercel.app/api/data' 
+    const resp = await fetch(API_URL, { headers : { "x-content-key" : "your-data-key-here"}})
+    const data = await resp.json()
+    `);
+
+    alert("Copied the code.");
+  }
+
   return (
     <div className="mt-2 py-2 text-sm">
       <div>
@@ -23,24 +34,21 @@ export default function Instructions() {
       </div>
 
       <div className="mt-5">
-        <p className="text-sm border-b pb-2 font-bold">2. How to access data ? </p>
+        <p className="text-sm border-b pb-2 font-bold gap-2 flex items-center">
+          2. How to access data ?
+          <button onClick={copyFetchReq}>
+            <FiClipboard />
+          </button>
+        </p>
 
         <p className="mt-3 text-sm">
-          <p>const API_URL = 'https://robojson.vercel.app/api/data'</p>
-          <p className="mt-5 border-b">USING FETCH API</p>
-          {`await fetch(API_URL, {
-headers : {
-"x-content-key" : "your-data-key-here"
-}
-})`}
+          <div className="bg-[#272822] text-white p-2 flex flex-col gap-3">
+            <p> const API_URL = 'https://robojson.vercel.app/api/data' </p>
 
-          <p className="mt-5 border-b">USING AXIOS</p>
+            <p>{`const resp = await fetch(API_URL, { headers : { "x-content-key" : "your-data-key-here"}})`}</p>
 
-          <p>{`await axios.get(API_URL, {
-headers : {
-"x-content-key" : "your-data-key-here"
-}
-})`}</p>
+            <p>{`const data = await resp.json()`}</p>
+          </div>
 
           <p className="mt-5 border-b mb-2">SAMPLE RESPONSE</p>
           <JSONPretty
