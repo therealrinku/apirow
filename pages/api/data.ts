@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import db from "../../db/index";
+import NextCors from "nextjs-cors";
 
 const isJson = (str: string) => {
   try {
@@ -11,6 +12,13 @@ const isJson = (str: string) => {
 };
 
 export default async function getData(req: NextApiRequest, res: NextApiResponse) {
+  //CORS MIDDLEWARE
+  await NextCors(req, res, {
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    origin: "*",
+    optionsSuccessStatus: 200,
+  });
+
   const content_key = req.headers["x-content-key"];
   if (!content_key) {
     return res.status(401).json({ error: "Content key not found or invalid content key" });
