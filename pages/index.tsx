@@ -21,7 +21,7 @@ export default function Main() {
   async function generateToken() {
     try {
       setLoading(true);
-      const res: any = axios.post("/api/generateToken");
+      const res: any = await axios.post("/api/generateToken");
       setToken(res.data.token);
       setTokenValidated(true);
       setLoading(false);
