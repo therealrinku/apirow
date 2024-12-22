@@ -1,33 +1,33 @@
-# Robojson
-
-Roboshare is a simple service for adding json data and fetching it in the frontend.
-RECOMMENDED TO USE ONLY FOR TESTING, don't use in the production applications
+<div align="center">
+    <img src="https://cdn-icons-png.flaticon.com/128/136/136525.png" alt="Logo" width="80" height="80">
+    <h3>robojson</h3>
+    <p>minimal web app for testing frontend UI with data until your backend api is ready!</p>
+</div>
 
 ## Features
 
-- **Add Data:** Add any data json or text
-- **Fetch that same data:** Fetch the custom data added through our rest API just by using data token.
-- **Amazing for development purposes:** No-need to google for your specific mock data requirements anymore, just add any type of custom data you want and test your frontend application
+✨ Minimal and simple UI
+
+🔥 Add json or raw data and fetch it on the frontend in just 2 minutes!
+
+🔥 Use api key to access your data, so no one else can sneak it
+
+## Headshots
+<img width="1371" alt="Screenshot 2024-12-22 at 08 47 35" src="https://github.com/user-attachments/assets/c64ffce9-8b88-4a77-8498-d9d58681856e" />
+
 
 ## Technologies Used
+<img src="https://img.shields.io/badge/next-000000?style=for-the-badge&logo=nextdotjs&logoColor=white"/>
+<img src="https://img.shields.io/badge/postgres-000000?style=for-the-badge&logo=postgresql&logoColor=blue"/>
+<img src="https://img.shields.io/badge/typescript-000000?style=for-the-badge&logo=typescript&logoColor=blue"/>
 
-- **Next.js:** Robust React framework for building the front end.
-- **PostgreSQL database:** For storing all the data.
-- **Vercel:** For hosting the website
-
-## Getting Started
+## Development
 
 To run this project locally, follow these steps:
 
-### Prerequisites
-
-- Node.js installed
-
-### Installation
-
 1. Clone the repository.
    ```bash
-   git clone https://github.com/therealrinku/roboshare.git
+   git clone https://github.com/therealrinku/robojson.git
 
 2. Install the dependencies.
    ```bash
@@ -35,10 +35,10 @@ To run this project locally, follow these steps:
    
 3. Get your postgres setup and add connection string to .env(name is DB_URL) . I got my postgreSQL setup from elephantSQL.com
 
-4. Run the database/createTables.js script in the database directory for creating the required database tables(data, tokens)
+4. Run the database/createTables.js script in the database directory for creating the required database tables
    ```bash
    node createTables.js
-
+   
 5. Run the project.
    ```bash
    yarn run dev
