@@ -1,6 +1,6 @@
 <div align="center">
     <img src="https://cdn-icons-png.flaticon.com/128/136/136525.png" alt="Logo" width="80" height="80">
-    <h3>robojson</h3>
+    <h3>apirow</h3>
     <p>minimal web app for testing frontend UI with data until your backend api is ready!</p>
 </div>
 
@@ -17,9 +17,9 @@
 
 
 ## Technologies Used
-<img src="https://img.shields.io/badge/next-000000?style=for-the-badge&logo=nextdotjs&logoColor=white"/>
+<img src="https://img.shields.io/badge/nodejs-000000?style=for-the-badge&logo=nodejs&logoColor=yellow"/>
+<img src="https://img.shields.io/badge/javascript-000000?style=for-the-badge&logo=javascript&logoColor=yellow"/>
 <img src="https://img.shields.io/badge/postgres-000000?style=for-the-badge&logo=postgresql&logoColor=blue"/>
-<img src="https://img.shields.io/badge/typescript-000000?style=for-the-badge&logo=typescript&logoColor=blue"/>
 
 ## Development
 
@@ -27,7 +27,7 @@ To run this project locally, follow these steps:
 
 1. Clone the repository.
    ```bash
-   git clone https://github.com/therealrinku/robojson.git
+   git clone https://github.com/therealrinku/apirow.git
 
 2. Install the dependencies.
    ```bash
