@@ -12,9 +12,6 @@
 
 🔥 Use api key to access your data, so no one else can sneak it
 
-## Headshots
-<img width="1371" alt="Screenshot 2024-12-22 at 08 47 35" src="https://github.com/user-attachments/assets/c64ffce9-8b88-4a77-8498-d9d58681856e" />
-
 
 ## Technologies Used
 <img src="https://img.shields.io/badge/nodejs-000000?style=for-the-badge&logo=nodejs&logoColor=yellow"/>
