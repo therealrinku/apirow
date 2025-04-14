@@ -14,7 +14,7 @@
 
 
 ## Technologies Used
-<img src="https://img.shields.io/badge/nodejs-000000?style=for-the-badge&logo=nodejs&logoColor=yellow"/>
+<img src="https://img.shields.io/badge/rowanjs-000000?style=for-the-badge&logo=javascript&logoColor=green"/>
 <img src="https://img.shields.io/badge/javascript-000000?style=for-the-badge&logo=javascript&logoColor=yellow"/>
 <img src="https://img.shields.io/badge/postgres-000000?style=for-the-badge&logo=postgresql&logoColor=blue"/>
 
